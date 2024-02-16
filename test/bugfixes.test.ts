@@ -264,7 +264,7 @@ describe('tests covering github issues', function () {
     expect(readJsonFile('./dist/with_use.css.map')).to.eql({
       'version': 3,
       'sources': ['../src/with_use.scss', '../scss_utils/_colors.scss'],
-      'sourcesContent': ['@use \'colors\';\n\na {\n  color: colors.$red;\n}', '$red: red;'],
+      'sourcesContent': ['@use \'colors\';\r\n\r\na {\r\n  color: colors.$red;\r\n}', '$red: red;'],
       "mappings": "AAEA;AACE,SCHI;;",
       'names': []
     })

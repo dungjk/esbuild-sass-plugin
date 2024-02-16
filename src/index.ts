@@ -1,21 +1,22 @@
-import {OnLoadResult} from 'esbuild'
-import {StringOptions} from 'sass-embedded'
-import {sassPlugin} from './plugin'
+import { OnLoadResult } from "esbuild";
+import { StringOptions } from "sass-embedded";
+import { sassPlugin } from "./plugin";
 
-export type Type = 'css' | 'style' | 'css-text' | 'lit-css'
+export type Type = "css" | "style" | "css-text" | "lit-css";
 
-export type SassPluginOptions = StringOptions<'async'> & {
+export type NamedExport = boolean | ((name: string) => string);
 
+export type SassPluginOptions = StringOptions<"async"> & {
   /**
    * Careful: this RegExp has to respect Go limitations!!!
    */
-  filter?: RegExp
+  filter?: RegExp;
 
   /**
    * Function to transform import path. Not just paths by @import
    * directive, but also paths imported by ts code.
    */
-  importMapper?: (url: string) => string
+  importMapper?: (url: string) => string;
 
   /**
    * An array of paths that should be looked in to attempt to resolve your @import declarations.
@@ -26,21 +27,21 @@ export type SassPluginOptions = StringOptions<'async'> & {
    *
    * @default []
    */
-  includePaths?: string[]
+  includePaths?: string[];
 
   /**
    * Directory that paths will be relative to.
    *
    * @default process.cwd()
    */
-  basedir?: string
+  basedir?: string;
 
   /**
    * Type of module wrapper to use
    *
    * @default css files will be passed to css loader
    */
-  type?: Type
+  type?: Type;
 
   /**
    * Enable the cache or pass your own Map to recycle its contents although
@@ -48,41 +49,48 @@ export type SassPluginOptions = StringOptions<'async'> & {
    *
    * @default true
    */
-  cache?: Map<string, CachedResult> | boolean
+  cache?: Map<string, CachedResult> | boolean;
 
   /**
    * A function which will post process the css file before wrapping it in a module
    *
    * @default undefined
    */
-  transform?: (this: SassPluginOptions, css: string, resolveDir: string, filePath: string) => string | OnLoadResult | Promise<string | OnLoadResult>
+  transform?: (
+    this: SassPluginOptions,
+    css: string,
+    resolveDir: string,
+    filePath: string
+  ) => string | OnLoadResult | Promise<string | OnLoadResult>;
 
   /**
    *
    */
-  precompile?: (source: string, path: string, isRoot?: boolean) => string
+  precompile?: (source: string, path: string, isRoot?: boolean) => string;
 
   /**
    * Should rewrite leftover css imports starting with ~ so that esbuild can resolve them?
    */
-  cssImports?: boolean
+  cssImports?: boolean;
 
   /**
    *
    */
-  nonce?: string
+  nonce?: string;
 
   /**
    *
    */
-  prefer?: 'sass' | 'style' | 'main'
-}
+  prefer?: "sass" | "style" | "main";
 
-export default sassPlugin
-export {sassPlugin}
-export {makeModule, postcssModules} from './utils'
+  namedExport?: NamedExport;
+};
+
+export default sassPlugin;
+export { sassPlugin };
+export { makeModule, postcssModules } from "./utils";
 
 export type CachedResult = {
-  mtimeMs: number
-  result: OnLoadResult
-}
+  mtimeMs: number;
+  result: OnLoadResult;
+};
