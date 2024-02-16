@@ -83,7 +83,7 @@ export type SassPluginOptions = StringOptions<"async"> & {
    */
   prefer?: "sass" | "style" | "main";
 
-  namedExport?: NamedExport;
+  namedExports?: NamedExport;
 };
 
 export default sassPlugin;

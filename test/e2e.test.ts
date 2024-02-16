@@ -279,6 +279,34 @@ describe('e2e tests', function () {
       };
     `)
   })
+ 
+  it('named-exports', async function () {
+    const options = useFixture('named-export')
+
+    await esbuild.build({
+      ...options,
+      entryPoints: ['./src/index.js'],
+      outdir: './out',
+      bundle: true,
+      format: 'esm',
+      plugins: [
+        sassPlugin({
+          namedExports: true,
+          transform: postcssModules({
+            localsConvention: 'camelCaseOnly'
+          })
+        })
+      ]
+    })
+
+    const bundle = readTextFile('./out/index.js')
+
+    expect(bundle).to.containIgnoreSpaces('class="${message} ${message2}"')
+
+    expect(bundle).to.containIgnoreSpaces(`var message = "_message_1vmzm_1";`)
+
+    expect(bundle).to.containIgnoreSpaces(`var message2 = "_message_bxgcs_1";`)
+  })
 
   it('css modules & lit-element together', async function () {
     const options = useFixture('multiple')

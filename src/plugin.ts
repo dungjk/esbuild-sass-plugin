@@ -164,11 +164,11 @@ export function sassPlugin(options: SassPluginOptions = {}): Plugin {
                 }
 
                 let exportConstants = "";
-                if (options.namedExport && pluginData.exports) {
+                if (options.namedExports && pluginData.exports) {
                   const json = JSON.parse(pluginData.exports);
                   const getClassName =
-                    typeof options.namedExport === "function"
-                      ? options.namedExport
+                    typeof options.namedExports === "function"
+                      ? options.namedExports
                       : ensureClassName;
                   Object.keys(json).forEach((name) => {
                     const newName = getClassName(name);
